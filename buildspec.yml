@@ -1,0 +1,36 @@
+version: 0.2
+
+phases:
+build:
+  commands:
+    # Install Docker ( if not pre installed)
+    - apt-get update -y
+    - apt-get install -y docker.io
+
+    #Login to ECR 
+    -aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin 050451358533.dkr.ecr.ap-south-1.amazonaws.com
+
+    # Build the Docker image
+    - docker build -t secondtime .
+
+    # Tag the Docker image with ECR repository URI
+    - docker tag secondtime:latest 050451358533.dkr.ecr.ap-south-1.amazonaws.com/second:latest
+
+    # Push the Docker image to ECR
+    - docker push 050451358533.dkr.ecr.ap-south-1.amazonaws.com/second:latest
+
+    # Create imagedefinitions.json
+    - |
+      echo '[
+        {
+          "name": "secondtime",
+          "imageUri": "050451358533.dkr.ecr.ap-south-1.amazonaws.com/second:latest"
+      
+        }
+      ]' > imagedefinitions.json
+
+artifacts:
+  files:
+    - imagedefinitions.json
+
+    
