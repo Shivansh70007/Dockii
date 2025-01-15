@@ -22,7 +22,7 @@ phases:
       # Create imagedefinitions.json
       - |
         echo '[{
-          "name": "secondtime",
+          "name": "DockerContainer",
           "imageUri": "050451358533.dkr.ecr.ap-south-1.amazonaws.com/second:latest"
         }]' > imagedefinitions.json
 
