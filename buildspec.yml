@@ -8,7 +8,7 @@ build:
     - apt-get install -y docker.io
 
     #Login to ECR 
-    -aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin 050451358533.dkr.ecr.ap-south-1.amazonaws.com
+    - aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin 050451358533.dkr.ecr.ap-south-1.amazonaws.com
 
     # Build the Docker image
     - docker build -t secondtime .
@@ -23,12 +23,12 @@ build:
     - |
       echo '[
         {
-          "name": "secondtime",
+          "name": "secondtime",  
           "imageUri": "050451358533.dkr.ecr.ap-south-1.amazonaws.com/second:latest"
       
         }
       ]' > imagedefinitions.json
-
+#-----> inline line number 26 the name of task--> container will be there
 artifacts:
   files:
     - imagedefinitions.json
